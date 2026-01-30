@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 interface MultiStepFormProps {
   onClose: () => void;
@@ -13,12 +13,8 @@ interface FormData {
   email: string;
 }
 
-interface FormErrors {
-  name?: string;
-  industry?: string;
-  whatsapp?: string;
-  email?: string;
-}
+// Robust error type that allows string indexing
+type FormErrors = Record<string, string | undefined>;
 
 const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
   const [step, setStep] = useState(1);
@@ -34,7 +30,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const validateField = (name: keyof FormData, value: string) => {
+  const validateField = (name: keyof FormData, value: string): string => {
     let error = '';
     switch (name) {
       case 'name':
@@ -54,6 +50,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
           error = 'Enter a valid email address';
         }
         break;
+      case 'situation':
+        if (!value) error = 'Please select your situation';
+        break;
     }
     return error;
   };
@@ -62,14 +61,14 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (touched[field]) {
       const error = validateField(field, value);
-      setErrors(prev => ({ ...prev, [field]: error }));
+      setErrors(prev => ({ ...prev, [field]: error || undefined }));
     }
   };
 
   const handleBlur = (field: keyof FormData) => {
     setTouched(prev => ({ ...prev, [field]: true }));
     const error = validateField(field, formData[field]);
-    setErrors(prev => ({ ...prev, [field]: error }));
+    setErrors(prev => ({ ...prev, [field]: error || undefined }));
   };
 
   const isStepValid = () => {
@@ -86,16 +85,23 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
     if (step === 3) fieldsToValidate.push('industry');
     
     const newErrors: FormErrors = {};
+    let hasErrors = false;
+
     fieldsToValidate.forEach(field => {
       const err = validateField(field, formData[field]);
-      if (err) newErrors[field] = err;
+      if (err) {
+        newErrors[field] = err;
+        hasErrors = true;
+      }
     });
 
-    if (Object.keys(newErrors).length === 0) {
+    if (!hasErrors) {
       setStep(prev => prev + 1);
     } else {
       setErrors(prev => ({ ...prev, ...newErrors }));
-      fieldsToValidate.forEach(f => setTouched(p => ({ ...p, [f]: true })));
+      const newTouched = { ...touched };
+      fieldsToValidate.forEach(f => newTouched[f] = true);
+      setTouched(newTouched);
     }
   };
 
@@ -106,7 +112,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
     if (!isStepValid()) return;
     
     setIsSubmitting(true);
-    // Simulate API call
     setTimeout(() => {
         setIsSubmitting(false);
         setIsSuccess(true);
@@ -127,7 +132,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ onClose }) => {
         <div className="p-8 md:p-12">
           {!isSuccess ? (
             <>
-              {/* Progress Bar */}
               <div className="flex items-center gap-2 mb-10">
                 {[1, 2, 3, 4].map(i => (
                   <div key={i} className={`h-1.5 flex-grow rounded-full transition-all duration-500 ${step >= i ? 'bg-cyan' : 'bg-white/10'}`} />
