@@ -1,0 +1,8 @@
+{
+  "name": "Himanshu - Online Business Mentor",
+  "description": "A high-converting, professional lead generation and webinar booking platform for Himanshu's network marketing mentorship program.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
