@@ -25,7 +25,7 @@ const Journey: React.FC = () => {
       year: '2023',
       title: 'THE GROWTH',
       description: 'Built systems, learned modern tools, reached manager level, started mentoring others and speaking on big stages.',
-      image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=800' // Representing the auditorium photo provided
+      image: '/growth.jpg'
     },
     {
       year: '2025',
@@ -65,7 +65,7 @@ const Journey: React.FC = () => {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className={`w-full h-full ${idx <= 2 ? 'object-contain bg-black/40' : 'object-cover grayscale group-hover:grayscale-0'} transition-all duration-700 group-hover:scale-110`}
+                      className={`w-full h-full ${idx <= 3 ? 'object-contain bg-black/40' : 'object-cover grayscale group-hover:grayscale-0'} transition-all duration-700 group-hover:scale-110`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-space/80 via-transparent to-transparent opacity-60"></div>
                   </div>
