@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { WHATSAPP_NUMBER } from '../../utils/submitLead';
+
 
 interface HeroProps {
   onQuiz: () => void;
@@ -22,22 +24,23 @@ const Hero: React.FC<HeroProps> = ({ onQuiz, onWebinar }) => {
 
         {/* Video Thumbnail - Mobile First (Higher Priority) */}
         <div className="w-full max-w-2xl glass p-1.5 md:p-3 rounded-2xl mb-8 md:mb-12 shadow-2xl relative group cursor-pointer order-2 md:order-3">
-          <div className="aspect-video bg-midnight rounded-xl flex items-center justify-center overflow-hidden relative">
-            <img 
-              src="https://picsum.photos/seed/himanshu/1280/720" 
-              alt="Himanshu Preview" 
-              className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" 
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-cyan/90 rounded-full flex items-center justify-center pl-1 md:pl-2 group-hover:scale-110 transition-transform shadow-lg shadow-cyan/40">
-                    <svg className="w-8 h-8 md:w-10 md:h-10 text-space" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                    </svg>
+          <div className="aspect-video bg-midnight rounded-xl overflow-hidden relative">
+            <script src="https://fast.wistia.com/player.js" async></script>
+            <script src="https://fast.wistia.com/embed/cr6pj4s5hy.js" async type="module"></script>
+            <style>
+              {`wistia-player[media-id='cr6pj4s5hy']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/cr6pj4s5hy/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }`}
+            </style>
+            {/* @ts-ignore */}
+            <wistia-player media-id="cr6pj4s5hy" aspect="1.7777777777777777" autoplay>
+              <div className="wistia_preload_transcript_outer_wrapper" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-56.25%' }}>
+                <div className="wistia_preload_transcript_inner_wrapper" style={{ overflow: 'auto' }}>
+                  <p className="wistia_preload_transcript_text" aria-hidden="true" tabIndex={-1} style={{ textAlign: 'justify', fontSize: '5px !important' }}>
+                    Guys, अगर आप इस video को देख रहे हो तो आप भी उसी जगह पे हो जिस जगह पे मैं आज से छह साल पहले था...
+                  </p>
                 </div>
-            </div>
-            <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4 flex items-center gap-2 glass px-2 py-1 md:px-3 md:py-1.5 rounded-lg border-white/10">
-                <span className="text-[10px] md:text-xs font-medium">Himanshu's Message (1:30)</span>
-            </div>
+              </div>
+              {/* @ts-ignore */}
+            </wistia-player>
           </div>
         </div>
 
@@ -68,35 +71,35 @@ const Hero: React.FC<HeroProps> = ({ onQuiz, onWebinar }) => {
             <span>📺 JOIN FREE LIVE TRAINING</span>
             <span className="text-xs font-medium text-cyan opacity-80 tracking-wide">Next: Sat 7PM • 47 seats left</span>
           </button>
-          
-          <button onClick={() => window.open('https://wa.me/919876543210', '_blank')} className="text-white/60 text-sm hover:text-cyan transition-colors underline underline-offset-4">
+
+          <button onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank')} className="text-white/60 text-sm hover:text-cyan transition-colors underline underline-offset-4">
             💬 Or WhatsApp me directly →
           </button>
         </div>
 
         {/* Trust Indicators - Horizontal Scroll on Mobile */}
         <div className="mt-12 md:mt-20 w-full overflow-x-auto no-scrollbar order-5">
-            <div className="flex md:grid md:grid-cols-4 gap-6 md:gap-12 min-w-max md:min-w-full px-4 md:px-0 opacity-80">
-                <div className="flex flex-col items-start md:items-center min-w-[120px]">
-                    <span className="text-cyan text-2xl md:text-3xl font-display font-bold">5+</span>
-                    <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Years Exp.</span>
-                </div>
-                <div className="flex flex-col items-start md:items-center min-w-[120px]">
-                    <span className="text-cyan text-2xl md:text-3xl font-display font-bold">500+</span>
-                    <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Guided</span>
-                </div>
-                <div className="flex flex-col items-start md:items-center min-w-[120px]">
-                    <span className="text-cyan text-2xl md:text-3xl font-display font-bold">🌏</span>
-                    <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Global Reach</span>
-                </div>
-                <div className="flex flex-col items-start md:items-center min-w-[120px]">
-                    <span className="text-cyan text-2xl md:text-3xl font-display font-bold">4.9/5</span>
-                    <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Avg Rating</span>
-                </div>
+          <div className="flex md:grid md:grid-cols-4 gap-6 md:gap-12 min-w-max md:min-w-full px-4 md:px-0 opacity-80">
+            <div className="flex flex-col items-start md:items-center min-w-[120px]">
+              <span className="text-cyan text-2xl md:text-3xl font-display font-bold">5+</span>
+              <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Years Exp.</span>
             </div>
+            <div className="flex flex-col items-start md:items-center min-w-[120px]">
+              <span className="text-cyan text-2xl md:text-3xl font-display font-bold">500+</span>
+              <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Guided</span>
+            </div>
+            <div className="flex flex-col items-start md:items-center min-w-[120px]">
+              <span className="text-cyan text-2xl md:text-3xl font-display font-bold">🌏</span>
+              <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Global Reach</span>
+            </div>
+            <div className="flex flex-col items-start md:items-center min-w-[120px]">
+              <span className="text-cyan text-2xl md:text-3xl font-display font-bold">4.9/5</span>
+              <span className="text-[10px] md:text-sm text-white/50 uppercase tracking-widest font-bold">Avg Rating</span>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

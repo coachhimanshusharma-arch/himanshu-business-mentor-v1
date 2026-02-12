@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { WHATSAPP_NUMBER } from '../../utils/submitLead';
 
 interface HeaderProps {
   onConnect: () => void;
@@ -32,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ onConnect, onWebinar }) => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <button onClick={() => document.getElementById('journey')?.scrollIntoView({behavior: 'smooth'})} className="hover:text-cyan transition-colors font-medium">About</button>
+          <button onClick={() => document.getElementById('journey')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-cyan transition-colors font-medium">About</button>
           <button onClick={onWebinar} className="hover:text-cyan transition-colors font-medium">Webinar</button>
           <button onClick={onConnect} className="px-6 py-2.5 rounded-full bg-cta-gradient font-bold text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-cyan/20">
             🚀 Connect
@@ -71,9 +72,9 @@ const Header: React.FC<HeaderProps> = ({ onConnect, onWebinar }) => {
               </svg>
             </button>
           </div>
-          
+
           <div className="flex flex-col gap-6 text-xl font-display font-bold">
-            <button onClick={() => { setMobileMenuOpen(false); document.getElementById('journey')?.scrollIntoView({behavior: 'smooth'}) }} className="text-left border-b border-white/5 pb-4">My Journey</button>
+            <button onClick={() => { setMobileMenuOpen(false); document.getElementById('journey')?.scrollIntoView({ behavior: 'smooth' }) }} className="text-left border-b border-white/5 pb-4">My Journey</button>
             <button onClick={() => { setMobileMenuOpen(false); onWebinar() }} className="text-left border-b border-white/5 pb-4 flex justify-between items-center">
               Free Webinar <span className="text-[10px] bg-danger px-2 py-0.5 rounded text-white animate-pulse">LIVE</span>
             </button>
@@ -82,7 +83,7 @@ const Header: React.FC<HeaderProps> = ({ onConnect, onWebinar }) => {
 
           <div className="mt-auto space-y-4">
             <button onClick={() => { setMobileMenuOpen(false); onConnect(); }} className="w-full py-4 rounded-xl bg-cta-gradient text-lg font-bold shadow-xl shadow-cyan/20">🚀 GET FREE ACCESS</button>
-            <a href="https://wa.me/919876543210" className="w-full py-4 rounded-xl bg-success/10 border border-success/30 text-success text-center block text-lg font-bold">💬 WHATSAPP</a>
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="w-full py-4 rounded-xl bg-success/10 border border-success/30 text-success text-center block text-lg font-bold">💬 WHATSAPP</a>
           </div>
         </div>
       )}
