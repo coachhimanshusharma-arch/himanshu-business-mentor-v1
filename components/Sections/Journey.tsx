@@ -19,7 +19,7 @@ const Journey: React.FC = () => {
       year: '2021',
       title: 'THE SHIFT',
       description: 'Mindset changed when I focused on solving problems instead of selling products. Everything started changing.',
-      image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=800'
+      image: '/shift.jpg'
     },
     {
       year: '2023',
@@ -65,7 +65,7 @@ const Journey: React.FC = () => {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className={`w-full h-full ${idx <= 1 ? 'object-contain bg-black/40' : 'object-cover grayscale group-hover:grayscale-0'} transition-all duration-700 group-hover:scale-110`}
+                      className={`w-full h-full ${idx <= 2 ? 'object-contain bg-black/40' : 'object-cover grayscale group-hover:grayscale-0'} transition-all duration-700 group-hover:scale-110`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-space/80 via-transparent to-transparent opacity-60"></div>
                   </div>
