@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { WHATSAPP_NUMBER } from '../../utils/submitLead';
 
+
 interface FloatingCTAProps {
   onConnect: () => void;
 }

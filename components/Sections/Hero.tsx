@@ -99,7 +99,7 @@ const Hero: React.FC<HeroProps> = ({ onQuiz, onWebinar }) => {
           </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 };
 
