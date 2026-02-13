@@ -31,7 +31,7 @@
 const FORM_ENDPOINT = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec';
 
 // ⚠️ REPLACE THIS with Himanshu's real WhatsApp number (with country code, no +)
-export const WHATSAPP_NUMBER = '919876543210'; // TODO: Replace with real number
+export const WHATSAPP_NUMBER = '917888392033';
 
 export interface LeadData {
     name?: string;

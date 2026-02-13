@@ -26,7 +26,7 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onQuiz, onWebinar, onForm }) => {
       title: '💬 OPTION 3: WHATSAPP DIRECTLY',
       desc: 'Have questions? Message me directly on WhatsApp.',
       btn: 'Chat on WhatsApp →',
-      action: () => window.open('https://wa.me/919876543210', '_blank')
+      action: () => window.open('https://wa.me/917888392033', '_blank')
     }
   ];
 
@@ -41,16 +41,16 @@ const FinalCTA: React.FC<FinalCTAProps> = ({ onQuiz, onWebinar, onForm }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {options.map((opt, i) => (
             <div key={i} className={`p-1 rounded-3xl ${opt.highlight ? 'bg-cta-gradient' : 'bg-white/5'}`}>
-                <div className="glass p-8 rounded-[22px] h-full flex flex-col text-left">
-                    <h3 className="font-display font-bold text-lg mb-4 text-cyan">{opt.title}</h3>
-                    <p className="text-white/60 text-sm mb-10 flex-grow leading-relaxed">{opt.desc}</p>
-                    <button 
-                        onClick={opt.action}
-                        className={`w-full py-4 rounded-xl font-bold text-sm transition-all ${opt.highlight ? 'bg-white text-space shadow-lg shadow-white/10' : 'bg-white/10 hover:bg-white/20'}`}
-                    >
-                        {opt.btn}
-                    </button>
-                </div>
+              <div className="glass p-8 rounded-[22px] h-full flex flex-col text-left">
+                <h3 className="font-display font-bold text-lg mb-4 text-cyan">{opt.title}</h3>
+                <p className="text-white/60 text-sm mb-10 flex-grow leading-relaxed">{opt.desc}</p>
+                <button
+                  onClick={opt.action}
+                  className={`w-full py-4 rounded-xl font-bold text-sm transition-all ${opt.highlight ? 'bg-white text-space shadow-lg shadow-white/10' : 'bg-white/10 hover:bg-white/20'}`}
+                >
+                  {opt.btn}
+                </button>
+              </div>
             </div>
           ))}
         </div>
