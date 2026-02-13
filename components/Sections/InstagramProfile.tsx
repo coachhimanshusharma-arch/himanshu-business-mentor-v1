@@ -26,11 +26,11 @@ const InstagramProfile: React.FC = () => {
     ];
 
     const highlights = [
-        { title: 'SINGAPORE', color: 'bg-gradient-to-tr from-orange-400 to-pink-500' },
-        { title: 'BALI', color: 'bg-gradient-to-tr from-blue-400 to-cyan-500' },
-        { title: 'GOA', color: 'bg-gradient-to-tr from-green-400 to-emerald-500' },
-        { title: 'UDAIPUR', color: 'bg-gradient-to-tr from-purple-400 to-violet-500' },
-        { title: 'MANALI 2.0', color: 'bg-gradient-to-tr from-pink-400 to-rose-500' }
+        { title: 'SINGAPORE', img: 'https://flagcdn.com/w320/sg.png' },
+        { title: 'BALI', img: 'https://flagcdn.com/w320/id.png' },
+        { title: 'GOA', img: 'https://loremflickr.com/320/320/goa,beach' },
+        { title: 'UDAIPUR', img: 'https://loremflickr.com/320/320/udaipur,palace' },
+        { title: 'MANALI 2.0', img: 'https://loremflickr.com/320/320/manali,snow' }
     ];
 
     return (
@@ -83,9 +83,9 @@ const InstagramProfile: React.FC = () => {
                 <div className="flex gap-4 md:gap-8 overflow-x-auto pb-4 mb-16 no-scrollbar justify-start md:justify-center px-4">
                     {highlights.map((h, i) => (
                         <div key={i} className="flex flex-col items-center gap-2 min-w-[70px] cursor-pointer group">
-                            <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full p-[2px] ${h.color} group-hover:scale-105 transition-transform shrink-0`}>
-                                <div className="w-full h-full rounded-full bg-black border-2 border-black flex items-center justify-center">
-                                    <span className="text-2xl">✈️</span>
+                            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full p-[2px] bg-white/10 group-hover:scale-105 transition-transform shrink-0 border border-white/5">
+                                <div className="w-full h-full rounded-full bg-black border-2 border-black flex items-center justify-center overflow-hidden">
+                                    <img src={h.img} alt={h.title} className="w-full h-full object-cover" />
                                 </div>
                             </div>
                             <span className="text-xs font-medium tracking-wide whitespace-nowrap">{h.title}</span>
