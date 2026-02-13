@@ -13,7 +13,7 @@ import Webinar from './components/Sections/Webinar';
 import Testimonials from './components/Sections/Testimonials';
 import FAQ from './components/Sections/FAQ';
 import FinalCTA from './components/Sections/FinalCTA';
-import MultiStepForm from './components/LeadGen/MultiStepForm';
+import InstantLeadForm from './components/LeadGen/InstantLeadForm';
 import Quiz from './components/LeadGen/Quiz';
 import ExitIntent from './components/LeadGen/ExitIntent';
 import SocialProofToast from './components/LeadGen/SocialProofToast';
@@ -39,7 +39,7 @@ const App: React.FC = () => {
         }} />
 
         <main className="pt-20">
-          <Hero onQuiz={openQuiz} onWebinar={() => {
+          <Hero onQuiz={openForm} onWebinar={() => {
             const element = document.getElementById('webinar');
             element?.scrollIntoView({ behavior: 'smooth' });
           }} />
@@ -77,7 +77,7 @@ const App: React.FC = () => {
         <Footer />
 
         {/* Lead Gen Modals & Overlays */}
-        {showForm && <MultiStepForm onClose={closeForm} />}
+        {showForm && <InstantLeadForm onClose={closeForm} />}
         {showQuiz && <Quiz onClose={closeQuiz} />}
         <ExitIntent />
         <SocialProofToast />
