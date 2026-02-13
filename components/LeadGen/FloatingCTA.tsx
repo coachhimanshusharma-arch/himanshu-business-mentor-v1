@@ -61,8 +61,8 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onConnect }) => {
             onClick={onConnect}
             className="flex-grow h-14 rounded-2xl bg-cta-gradient font-bold text-base shadow-xl shadow-cyan/20 flex flex-col items-center justify-center leading-tight active:scale-[0.98] transition-all"
           >
-            <span>🚀 GET FREE ACCESS</span>
-            <span className="text-[10px] font-medium opacity-80 uppercase tracking-tighter">Instant access →</span>
+            <span>🚀 APPLY NOW</span>
+            <span className="text-[10px] font-medium opacity-80 uppercase tracking-tighter">Limited seats →</span>
           </button>
         </div>
       </div>
