@@ -43,7 +43,7 @@ const InstagramProfile: React.FC = () => {
                     <div className="w-24 h-24 md:w-32 md:h-32 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 shrink-0">
                         <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border-2 border-black relative group">
                             <img
-                                src="/instagram-profile.png"
+                                src="/instagram-profile.jpg"
                                 alt="Himanshu"
                                 className="w-full h-full object-cover"
                             />
