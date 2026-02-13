@@ -47,22 +47,14 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onConnect }) => {
         </div>
       </div>
 
-      {/* Mobile Sticky Dual CTA Bar */}
-      <div className={`fixed bottom-0 left-0 right-0 z-[100] md:hidden glass bg-space/80 border-t border-white/10 p-4 pb-6 transition-all duration-500 transform ${show ? 'translate-y-0' : 'translate-y-full shadow-none'}`}>
-        <div className="flex gap-3 max-w-lg mx-auto">
-          <button
-            onClick={handleWhatsApp}
-            className="w-[35%] h-14 rounded-2xl glass border-success/30 text-success flex flex-col items-center justify-center leading-tight active:scale-95 transition-all"
-          >
-            <span className="text-xl">💬</span>
-            <span className="text-[10px] font-bold uppercase tracking-widest">WhatsApp</span>
-          </button>
+      {/* Mobile Sticky CTA Bar */}
+      <div className={`fixed bottom-0 left-0 right-0 z-[100] md:hidden bg-black/80 backdrop-blur-md border-t border-white/10 p-3 pb-5 transition-all duration-500 transform ${show ? 'translate-y-0' : 'translate-y-full shadow-none'}`}>
+        <div className="max-w-lg mx-auto">
           <button
             onClick={onConnect}
-            className="flex-grow h-14 rounded-2xl bg-cta-gradient font-bold text-base shadow-xl shadow-cyan/20 flex flex-col items-center justify-center leading-tight active:scale-[0.98] transition-all"
+            className="w-full h-12 rounded-2xl bg-cta-gradient font-bold text-base shadow-xl shadow-cyan/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
           >
-            <span>🚀 APPLY NOW</span>
-            <span className="text-[10px] font-medium opacity-80 uppercase tracking-tighter">Limited seats →</span>
+            🚀 APPLY NOW
           </button>
         </div>
       </div>

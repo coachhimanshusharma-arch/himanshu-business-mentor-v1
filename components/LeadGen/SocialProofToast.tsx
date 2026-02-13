@@ -29,7 +29,7 @@ const SocialProofToast: React.FC = () => {
   }, [notifications.length]);
 
   return (
-    <div className={`fixed top-4 left-4 z-[80] transition-all duration-500 transform ${visible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
+    <div className={`fixed top-20 left-4 z-[70] transition-all duration-500 transform ${visible ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
       <div className="bg-black/70 backdrop-blur-sm px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg border border-white/10 max-w-[200px]">
         <span className="text-sm">🔔</span>
         <div className="min-w-0">
