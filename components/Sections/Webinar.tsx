@@ -43,21 +43,21 @@ const Webinar: React.FC = () => {
               <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 leading-tight">
                 "THE TRUTH ABOUT <br /> ONLINE BUSINESS — <br /> <span className="text-cyan text-glow">FINALLY EXPLAINED"</span>
               </h2>
-              
+
               <div className="space-y-4 mb-10 text-white/70">
                 <div className="flex items-center gap-4">
-                    <span className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl">📅</span>
-                    <div>
-                        <p className="font-bold text-white">Next Session: This Saturday</p>
-                        <p className="text-sm">7:00 PM IST (Zoom Meeting)</p>
-                    </div>
+                  <span className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl">📅</span>
+                  <div>
+                    <p className="font-bold text-white">Next Session: This Saturday</p>
+                    <p className="text-sm">7:00 PM IST (Zoom Meeting)</p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-4">
-                    <span className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl">⏱️</span>
-                    <div>
-                        <p className="font-bold text-white">60 Minutes Duration</p>
-                        <p className="text-sm">Actionable insights + Live Q&A</p>
-                    </div>
+                  <span className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl">⏱️</span>
+                  <div>
+                    <p className="font-bold text-white">60 Minutes Duration</p>
+                    <p className="text-sm">Actionable insights + Live Q&A</p>
+                  </div>
                 </div>
               </div>
 
@@ -86,17 +86,17 @@ const Webinar: React.FC = () => {
 
             <div className="relative">
               <div className="aspect-[4/5] bg-midnight rounded-3xl overflow-hidden border border-white/10 relative">
-                <img src="https://picsum.photos/seed/webinar/800/1000" alt="Webinar Preview" className="w-full h-full object-cover" />
+                <img src="/truth-section.jpg" alt="Himanshu - Kotkapura Success Event" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-space via-transparent to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
-                    <div className="glass p-4 rounded-xl border-white/10">
-                        <p className="text-sm font-bold mb-1">In this session you'll learn:</p>
-                        <ul className="text-xs text-white/60 space-y-2">
-                            <li>✓ The 5 fatal mistakes in online business</li>
-                            <li>✓ How to build with systems, not hustle</li>
-                            <li>✓ The honest reality of income potentials</li>
-                        </ul>
-                    </div>
+                  <div className="glass p-4 rounded-xl border-white/10">
+                    <p className="text-sm font-bold mb-1">In this session you'll learn:</p>
+                    <ul className="text-xs text-white/60 space-y-2">
+                      <li>✓ The 5 fatal mistakes in online business</li>
+                      <li>✓ How to build with systems, not hustle</li>
+                      <li>✓ The honest reality of income potentials</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
               {/* Decorative Glow */}
