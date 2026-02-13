@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 
 const InstagramProfile: React.FC = () => {
-
+    // Force Vercel rebuild
     useEffect(() => {
         // Load Instagram Embed Script
         const script = document.createElement('script');
