@@ -17,6 +17,7 @@ import MultiStepForm from './components/LeadGen/MultiStepForm';
 import Quiz from './components/LeadGen/Quiz';
 import ExitIntent from './components/LeadGen/ExitIntent';
 import SocialProofToast from './components/LeadGen/SocialProofToast';
+import InstagramProfile from './components/Sections/InstagramProfile';
 import FloatingCTA from './components/LeadGen/FloatingCTA';
 
 const App: React.FC = () => {
@@ -33,41 +34,43 @@ const App: React.FC = () => {
     <Router>
       <div className="min-h-screen bg-hero-gradient font-sans text-white selection:bg-cyan selection:text-space">
         <Header onConnect={openForm} onWebinar={() => {
-           const element = document.getElementById('webinar');
-           element?.scrollIntoView({ behavior: 'smooth' });
+          const element = document.getElementById('webinar');
+          element?.scrollIntoView({ behavior: 'smooth' });
         }} />
 
         <main className="pt-20">
           <Hero onQuiz={openQuiz} onWebinar={() => {
-             const element = document.getElementById('webinar');
-             element?.scrollIntoView({ behavior: 'smooth' });
+            const element = document.getElementById('webinar');
+            element?.scrollIntoView({ behavior: 'smooth' });
           }} />
-          
+
+          <InstagramProfile />
+
           <ProblemAgitation />
-          
+
           <QuizBanner onStart={openQuiz} />
-          
+
           <Journey />
-          
+
           <Philosophy />
-          
+
           <WhatYouLearn />
-          
+
           <div id="webinar">
             <Webinar />
           </div>
-          
+
           <Testimonials />
-          
+
           <FAQ />
-          
-          <FinalCTA 
-            onQuiz={openQuiz} 
+
+          <FinalCTA
+            onQuiz={openQuiz}
             onWebinar={() => {
               const element = document.getElementById('webinar');
               element?.scrollIntoView({ behavior: 'smooth' });
             }}
-            onForm={openForm} 
+            onForm={openForm}
           />
         </main>
 
