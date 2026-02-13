@@ -39,10 +39,14 @@ const InstagramProfile: React.FC = () => {
 
                 {/* Profile Header */}
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-12">
-                    {/* Profile Picture (Placeholder) */}
+                    {/* Profile Picture */}
                     <div className="w-24 h-24 md:w-32 md:h-32 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 shrink-0">
-                        <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border-2 border-black">
-                            <span className="text-4xl">👨‍💼</span>
+                        <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border-2 border-black relative group">
+                            <img
+                                src="/instagram-profile.png"
+                                alt="Himanshu"
+                                className="w-full h-full object-cover"
+                            />
                         </div>
                     </div>
 
@@ -51,7 +55,7 @@ const InstagramProfile: React.FC = () => {
                         <div className="flex flex-col md:flex-row items-center gap-4 mb-4 justify-center md:justify-start">
                             <h2 className="text-xl md:text-2xl font-bold">himanshu.19970</h2>
                             <div className="flex gap-2">
-                                <button className="px-4 py-1.5 bg-blue-500 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">Follow</button>
+                                <button onClick={() => window.open('https://www.instagram.com/himanshu.19970', '_blank')} className="px-6 py-1.5 bg-blue-500 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">Follow</button>
                                 <button className="px-4 py-1.5 bg-white/10 rounded-lg text-sm font-semibold hover:bg-white/20 transition-colors">Message</button>
                             </div>
                         </div>
@@ -64,11 +68,11 @@ const InstagramProfile: React.FC = () => {
 
                         <div className="text-sm md:text-base text-white/90 space-y-1">
                             <p className="font-semibold">🍁 HIMANSHU 🍁</p>
-                            <p>Entrepreneur</p>
+                            <p className="text-white/60">Entrepreneur</p>
                             <p>&gt; Punjab 📍 | Business coach 💼</p>
                             <p>🚀 ਆਪਣੀਆਂ skills ਨਾਲ online business ਚ ਕਮਾਈ ਕਰੋ 👇</p>
                             <p>&gt; Want to build income through onl... <span className="text-white/60 cursor-pointer">more</span></p>
-                            <a href="https://wa.link/12nt6p" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:underline flex items-center gap-1 justify-center md:justify-start">
+                            <a href="https://wa.link/12nt6p" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-blue-100 hover:underline flex items-center gap-1 justify-center md:justify-start mt-1">
                                 🔗 <span className="font-semibold">wa.link/12nt6p</span>
                             </a>
                         </div>
