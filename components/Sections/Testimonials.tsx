@@ -47,18 +47,21 @@ const Testimonials: React.FC = () => {
           {/* Video 1 */}
           <div className="glass p-2 rounded-2xl border-white/5 relative group">
             <style>{`wistia-player[media-id='fo5gqfzq1h']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/fo5gqfzq1h/swatch'); display: block; filter: blur(5px); padding-top:179.17%; }`}</style>
+            {/* @ts-ignore */}
             <wistia-player media-id="fo5gqfzq1h" aspect="0.5581395348837209" autoplay></wistia-player>
           </div>
 
           {/* Video 2 */}
           <div className="glass p-2 rounded-2xl border-white/5 relative group">
             <style>{`wistia-player[media-id='x77lledwug']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/x77lledwug/swatch'); display: block; filter: blur(5px); padding-top:133.33%; }`}</style>
+            {/* @ts-ignore */}
             <wistia-player media-id="x77lledwug" aspect="0.75" autoplay></wistia-player>
           </div>
 
           {/* Video 3 */}
           <div className="glass p-2 rounded-2xl border-white/5 relative group">
             <style>{`wistia-player[media-id='kx5rsl3ov5']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/kx5rsl3ov5/swatch'); display: block; filter: blur(5px); padding-top:176.8%; }`}</style>
+            {/* @ts-ignore */}
             <wistia-player media-id="kx5rsl3ov5" aspect="0.565625" autoplay></wistia-player>
           </div>
         </div>
