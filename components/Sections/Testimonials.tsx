@@ -1,13 +1,7 @@
 
 import React, { useEffect } from 'react';
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'wistia-player': any;
-    }
-  }
-}
+
 
 const Testimonials: React.FC = () => {
   useEffect(() => {
