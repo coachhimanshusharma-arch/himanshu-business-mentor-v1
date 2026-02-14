@@ -45,6 +45,7 @@ const App: React.FC = () => {
           }} />
 
           <InstagramProfile />
+          <Testimonials />
 
           <ProblemAgitation />
 
@@ -60,7 +61,7 @@ const App: React.FC = () => {
             <Webinar />
           </div>
 
-          <Testimonials />
+
 
           <FAQ />
 
