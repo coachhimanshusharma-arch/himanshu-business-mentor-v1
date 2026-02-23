@@ -24,7 +24,7 @@ const InstagramProfile: React.FC = () => {
                     observer.disconnect();
                 }
             },
-            { rootMargin: '300px' } // Start loading 300px before visible
+            { rootMargin: '300px' }
         );
 
         if (sectionRef.current) {
@@ -38,7 +38,6 @@ const InstagramProfile: React.FC = () => {
     useEffect(() => {
         if (!isVisible) return;
 
-        // Check if Wistia player.js already loaded (by Hero or Testimonials)
         const existingPlayerScript = document.querySelector('script[src="https://fast.wistia.com/player.js"]');
         if (!existingPlayerScript) {
             const playerScript = document.createElement('script');
@@ -47,7 +46,6 @@ const InstagramProfile: React.FC = () => {
             document.head.appendChild(playerScript);
         }
 
-        // Load each video's embed script
         wistiaMediaIds.forEach((id) => {
             const existing = document.querySelector(`script[src="https://fast.wistia.com/embed/${id}.js"]`);
             if (!existing) {
@@ -70,13 +68,18 @@ const InstagramProfile: React.FC = () => {
         { title: 'MANALI 2.0', img: 'https://loremflickr.com/320/320/manali,snow' }
     ];
 
+    // Card width: 200px on mobile, 260px on desktop + 20px gap
+    const cardWidthMobile = 200;
+    const cardWidthDesktop = 260;
+    const gap = 20;
+    const totalCards = wistiaMediaIds.length;
+
     return (
         <section ref={sectionRef} className="py-12 bg-black text-white relative overflow-hidden">
             <div className="container mx-auto max-w-4xl px-4">
 
                 {/* Profile Header */}
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-12">
-                    {/* Profile Picture */}
                     <div className="w-24 h-24 md:w-32 md:h-32 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 shrink-0">
                         <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border-2 border-black relative group">
                             <img
@@ -88,7 +91,6 @@ const InstagramProfile: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Profile Info */}
                     <div className="flex-1 text-center md:text-left">
                         <div className="flex flex-col md:flex-row items-center gap-4 mb-4 justify-center md:justify-start">
                             <h2 className="text-xl md:text-2xl font-bold">himanshu.19970</h2>
@@ -140,16 +142,21 @@ const InstagramProfile: React.FC = () => {
 
             {/* Marquee Container - Wistia Videos */}
             <div className="w-full overflow-hidden py-4">
-                <div className="reels-marquee-track flex gap-5" style={{ width: 'max-content' }}>
-                    {/* Double the videos for seamless infinite scroll */}
+                <div
+                    className="reels-marquee-track flex"
+                    style={{
+                        gap: `${gap}px`,
+                        willChange: 'transform',
+                    }}
+                >
                     {[...wistiaMediaIds, ...wistiaMediaIds].map((mediaId, i) => (
                         <div
                             key={i}
-                            className="inline-block shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-                            style={{ width: '260px', aspectRatio: '9/16' }}
+                            className="reels-card inline-block shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
                         >
                             {scriptsLoaded ? (
                                 <div
+                                    style={{ width: '100%', height: '100%' }}
                                     dangerouslySetInnerHTML={{
                                         __html: `
                                             <style>
@@ -174,7 +181,6 @@ const InstagramProfile: React.FC = () => {
                                     }}
                                 />
                             ) : (
-                                /* Lightweight placeholder while videos load */
                                 <div className="w-full h-full bg-white/5 flex items-center justify-center">
                                     <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                                         <svg className="w-5 h-5 text-white/40" fill="currentColor" viewBox="0 0 24 24">
@@ -189,12 +195,34 @@ const InstagramProfile: React.FC = () => {
             </div>
 
             <style>{`
+                /* Mobile card sizing */
+                .reels-card {
+                    width: ${cardWidthMobile}px;
+                    height: ${Math.round(cardWidthMobile * 16 / 9)}px;
+                }
+
+                /* Desktop card sizing */
+                @media (min-width: 768px) {
+                    .reels-card {
+                        width: ${cardWidthDesktop}px;
+                        height: ${Math.round(cardWidthDesktop * 16 / 9)}px;
+                    }
+                }
+
                 @keyframes reelsScroll {
                     0% { transform: translateX(0); }
-                    100% { transform: translateX(-50%); }
+                    100% { transform: translateX(calc(-${totalCards} * (${cardWidthMobile}px + ${gap}px))); }
                 }
+
+                @media (min-width: 768px) {
+                    @keyframes reelsScroll {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(calc(-${totalCards} * (${cardWidthDesktop}px + ${gap}px))); }
+                    }
+                }
+
                 .reels-marquee-track {
-                    animation: reelsScroll 45s linear infinite;
+                    animation: reelsScroll 35s linear infinite;
                 }
                 .reels-marquee-track:hover {
                     animation-play-state: paused;
