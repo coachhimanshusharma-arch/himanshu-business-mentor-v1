@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 declare global {
   namespace JSX {
@@ -13,30 +13,56 @@ declare global {
 }
 
 const Testimonials: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Lazy load: Only load Wistia scripts when section is near viewport
   useEffect(() => {
-    // Load Wistia Player Core
-    const script1 = document.createElement('script');
-    script1.src = "https://fast.wistia.com/player.js";
-    script1.async = true;
-    document.body.appendChild(script1);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    // Check if Wistia player.js already loaded
+    const existingPlayerScript = document.querySelector('script[src="https://fast.wistia.com/player.js"]');
+    if (!existingPlayerScript) {
+      const script1 = document.createElement('script');
+      script1.src = "https://fast.wistia.com/player.js";
+      script1.async = true;
+      document.body.appendChild(script1);
+    }
 
     // Load individual video scripts
     const videoIds = ['fo5gqfzq1h', 'x77lledwug', 'kx5rsl3ov5'];
     videoIds.forEach(id => {
-      const s = document.createElement('script');
-      s.src = `https://fast.wistia.com/embed/${id}.js`;
-      s.async = true;
-      s.type = "module";
-      document.body.appendChild(s);
+      const existing = document.querySelector(`script[src="https://fast.wistia.com/embed/${id}.js"]`);
+      if (!existing) {
+        const s = document.createElement('script');
+        s.src = `https://fast.wistia.com/embed/${id}.js`;
+        s.async = true;
+        s.type = "module";
+        document.body.appendChild(s);
+      }
     });
-
-    return () => {
-      // Cleanup if needed (optional for landing pages)
-    }
-  }, []);
+  }, [isVisible]);
 
   return (
-    <section className="py-24 px-6 bg-midnight/10">
+    <section ref={sectionRef} className="py-24 px-6 bg-midnight/10">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="font-display font-bold text-3xl md:text-5xl mb-6">SUCCESS <span className="text-cyan">STORIES</span></h2>
@@ -46,23 +72,41 @@ const Testimonials: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Video 1 */}
           <div className="glass p-2 rounded-2xl border-white/5 relative group">
-            <style>{`wistia-player[media-id='fo5gqfzq1h']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/fo5gqfzq1h/swatch'); display: block; filter: blur(5px); padding-top:179.17%; }`}</style>
-            {/* @ts-ignore */}
-            <wistia-player media-id="fo5gqfzq1h" aspect="0.5581395348837209" autoplay></wistia-player>
+            {isVisible ? (
+              <>
+                <style>{`wistia-player[media-id='fo5gqfzq1h']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/fo5gqfzq1h/swatch'); display: block; filter: blur(5px); padding-top:179.17%; }`}</style>
+                {/* @ts-ignore */}
+                <wistia-player media-id="fo5gqfzq1h" aspect="0.5581395348837209" autoplay></wistia-player>
+              </>
+            ) : (
+              <div style={{ paddingTop: '179.17%' }} className="bg-white/5 rounded-xl" />
+            )}
           </div>
 
           {/* Video 2 */}
           <div className="glass p-2 rounded-2xl border-white/5 relative group">
-            <style>{`wistia-player[media-id='x77lledwug']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/x77lledwug/swatch'); display: block; filter: blur(5px); padding-top:133.33%; }`}</style>
-            {/* @ts-ignore */}
-            <wistia-player media-id="x77lledwug" aspect="0.75" autoplay></wistia-player>
+            {isVisible ? (
+              <>
+                <style>{`wistia-player[media-id='x77lledwug']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/x77lledwug/swatch'); display: block; filter: blur(5px); padding-top:133.33%; }`}</style>
+                {/* @ts-ignore */}
+                <wistia-player media-id="x77lledwug" aspect="0.75" autoplay></wistia-player>
+              </>
+            ) : (
+              <div style={{ paddingTop: '133.33%' }} className="bg-white/5 rounded-xl" />
+            )}
           </div>
 
           {/* Video 3 */}
           <div className="glass p-2 rounded-2xl border-white/5 relative group">
-            <style>{`wistia-player[media-id='kx5rsl3ov5']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/kx5rsl3ov5/swatch'); display: block; filter: blur(5px); padding-top:176.8%; }`}</style>
-            {/* @ts-ignore */}
-            <wistia-player media-id="kx5rsl3ov5" aspect="0.565625" autoplay></wistia-player>
+            {isVisible ? (
+              <>
+                <style>{`wistia-player[media-id='kx5rsl3ov5']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/kx5rsl3ov5/swatch'); display: block; filter: blur(5px); padding-top:176.8%; }`}</style>
+                {/* @ts-ignore */}
+                <wistia-player media-id="kx5rsl3ov5" aspect="0.565625" autoplay></wistia-player>
+              </>
+            ) : (
+              <div style={{ paddingTop: '176.8%' }} className="bg-white/5 rounded-xl" />
+            )}
           </div>
         </div>
       </div>

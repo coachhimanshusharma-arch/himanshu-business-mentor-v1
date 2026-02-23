@@ -66,6 +66,7 @@ const Journey: React.FC = () => {
                       src={item.image}
                       alt={item.title}
                       className="w-full h-full object-contain bg-black/40 transition-all duration-700 group-hover:scale-110"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-space/80 via-transparent to-transparent opacity-60"></div>
                   </div>

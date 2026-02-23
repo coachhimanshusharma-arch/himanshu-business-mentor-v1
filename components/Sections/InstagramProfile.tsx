@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const InstagramProfile: React.FC = () => {
     const wistiaMediaIds = [
@@ -11,31 +11,56 @@ const InstagramProfile: React.FC = () => {
         'puv0o47l6s'
     ];
 
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const [scriptsLoaded, setScriptsLoaded] = useState(false);
+
+    // Lazy load: Only load Wistia scripts when section is near viewport
     useEffect(() => {
-        // Load Wistia Player script
-        const playerScript = document.createElement('script');
-        playerScript.src = 'https://fast.wistia.com/player.js';
-        playerScript.async = true;
-        document.head.appendChild(playerScript);
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: '300px' } // Start loading 300px before visible
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Load Wistia scripts only when section becomes visible
+    useEffect(() => {
+        if (!isVisible) return;
+
+        // Check if Wistia player.js already loaded (by Hero or Testimonials)
+        const existingPlayerScript = document.querySelector('script[src="https://fast.wistia.com/player.js"]');
+        if (!existingPlayerScript) {
+            const playerScript = document.createElement('script');
+            playerScript.src = 'https://fast.wistia.com/player.js';
+            playerScript.async = true;
+            document.head.appendChild(playerScript);
+        }
 
         // Load each video's embed script
-        const videoScripts: HTMLScriptElement[] = [];
         wistiaMediaIds.forEach((id) => {
-            const script = document.createElement('script');
-            script.src = `https://fast.wistia.com/embed/${id}.js`;
-            script.async = true;
-            script.type = 'module';
-            document.head.appendChild(script);
-            videoScripts.push(script);
+            const existing = document.querySelector(`script[src="https://fast.wistia.com/embed/${id}.js"]`);
+            if (!existing) {
+                const script = document.createElement('script');
+                script.src = `https://fast.wistia.com/embed/${id}.js`;
+                script.async = true;
+                script.type = 'module';
+                document.head.appendChild(script);
+            }
         });
 
-        return () => {
-            if (playerScript.parentNode) playerScript.parentNode.removeChild(playerScript);
-            videoScripts.forEach((s) => {
-                if (s.parentNode) s.parentNode.removeChild(s);
-            });
-        };
-    }, []);
+        setScriptsLoaded(true);
+    }, [isVisible]);
 
     const highlights = [
         { title: 'SINGAPORE', img: 'https://flagcdn.com/w320/sg.png' },
@@ -46,7 +71,7 @@ const InstagramProfile: React.FC = () => {
     ];
 
     return (
-        <section className="py-12 bg-black text-white relative overflow-hidden">
+        <section ref={sectionRef} className="py-12 bg-black text-white relative overflow-hidden">
             <div className="container mx-auto max-w-4xl px-4">
 
                 {/* Profile Header */}
@@ -58,6 +83,7 @@ const InstagramProfile: React.FC = () => {
                                 src="/instagram-profile.jpg"
                                 alt="Himanshu"
                                 className="w-full h-full object-cover"
+                                loading="lazy"
                             />
                         </div>
                     </div>
@@ -97,7 +123,7 @@ const InstagramProfile: React.FC = () => {
                         <div key={i} className="flex flex-col items-center gap-2 min-w-[70px] cursor-pointer group">
                             <div className="w-16 h-16 md:w-20 md:h-20 rounded-full p-[2px] bg-white/10 group-hover:scale-105 transition-transform shrink-0 border border-white/5">
                                 <div className="w-full h-full rounded-full bg-black border-2 border-black flex items-center justify-center overflow-hidden">
-                                    <img src={h.img} alt={h.title} className="w-full h-full object-cover" />
+                                    <img src={h.img} alt={h.title} className="w-full h-full object-cover" loading="lazy" />
                                 </div>
                             </div>
                             <span className="text-xs font-medium tracking-wide whitespace-nowrap">{h.title}</span>
@@ -122,30 +148,41 @@ const InstagramProfile: React.FC = () => {
                             className="inline-block shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
                             style={{ width: '260px', aspectRatio: '9/16' }}
                         >
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: `
-                                        <style>
-                                            wistia-player[media-id='${mediaId}']:not(:defined) {
-                                                background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${mediaId}/swatch');
-                                                display: block;
-                                                filter: blur(5px);
-                                                padding-top: 177.78%;
-                                            }
-                                        </style>
-                                        <wistia-player
-                                            media-id="${mediaId}"
-                                            aspect="0.5625"
-                                            autoplay="true"
-                                            muted="true"
-                                            loop="true"
-                                            playsinline="true"
-                                            silentAutoplay="allow"
-                                            style="width:100%;height:100%;"
-                                        ></wistia-player>
-                                    `
-                                }}
-                            />
+                            {scriptsLoaded ? (
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: `
+                                            <style>
+                                                wistia-player[media-id='${mediaId}']:not(:defined) {
+                                                    background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${mediaId}/swatch');
+                                                    display: block;
+                                                    filter: blur(5px);
+                                                    padding-top: 177.78%;
+                                                }
+                                            </style>
+                                            <wistia-player
+                                                media-id="${mediaId}"
+                                                aspect="0.5625"
+                                                autoplay="true"
+                                                muted="true"
+                                                loop="true"
+                                                playsinline="true"
+                                                silentAutoplay="allow"
+                                                style="width:100%;height:100%;"
+                                            ></wistia-player>
+                                        `
+                                    }}
+                                />
+                            ) : (
+                                /* Lightweight placeholder while videos load */
+                                <div className="w-full h-full bg-white/5 flex items-center justify-center">
+                                    <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                                        <svg className="w-5 h-5 text-white/40" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

@@ -1,24 +1,26 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import Hero from './components/Sections/Hero';
-import ProblemAgitation from './components/Sections/ProblemAgitation';
-import QuizBanner from './components/Sections/QuizBanner';
-import Journey from './components/Sections/Journey';
-import Philosophy from './components/Sections/Philosophy';
-import WhatYouLearn from './components/Sections/WhatYouLearn';
-import Webinar from './components/Sections/Webinar';
-import Testimonials from './components/Sections/Testimonials';
-import FAQ from './components/Sections/FAQ';
-import FinalCTA from './components/Sections/FinalCTA';
-import InstantLeadForm from './components/LeadGen/InstantLeadForm';
-import Quiz from './components/LeadGen/Quiz';
-import ExitIntent from './components/LeadGen/ExitIntent';
-import SocialProofToast from './components/LeadGen/SocialProofToast';
-import InstagramProfile from './components/Sections/InstagramProfile';
-import FloatingCTA from './components/LeadGen/FloatingCTA';
+
+// Lazy load below-the-fold sections for faster initial page load
+const InstagramProfile = lazy(() => import('./components/Sections/InstagramProfile'));
+const Testimonials = lazy(() => import('./components/Sections/Testimonials'));
+const ProblemAgitation = lazy(() => import('./components/Sections/ProblemAgitation'));
+const QuizBanner = lazy(() => import('./components/Sections/QuizBanner'));
+const Journey = lazy(() => import('./components/Sections/Journey'));
+const Philosophy = lazy(() => import('./components/Sections/Philosophy'));
+const WhatYouLearn = lazy(() => import('./components/Sections/WhatYouLearn'));
+const Webinar = lazy(() => import('./components/Sections/Webinar'));
+const FAQ = lazy(() => import('./components/Sections/FAQ'));
+const FinalCTA = lazy(() => import('./components/Sections/FinalCTA'));
+const InstantLeadForm = lazy(() => import('./components/LeadGen/InstantLeadForm'));
+const Quiz = lazy(() => import('./components/LeadGen/Quiz'));
+const ExitIntent = lazy(() => import('./components/LeadGen/ExitIntent'));
+const SocialProofToast = lazy(() => import('./components/LeadGen/SocialProofToast'));
+const FloatingCTA = lazy(() => import('./components/LeadGen/FloatingCTA'));
 
 const App: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
@@ -44,45 +46,66 @@ const App: React.FC = () => {
             element?.scrollIntoView({ behavior: 'smooth' });
           }} />
 
-          <InstagramProfile />
-          <Testimonials />
+          <Suspense fallback={<div className="min-h-[200px]" />}>
+            <InstagramProfile />
+          </Suspense>
 
-          <ProblemAgitation />
+          <Suspense fallback={<div className="min-h-[200px]" />}>
+            <Testimonials />
+          </Suspense>
 
-          <QuizBanner onStart={openQuiz} />
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <ProblemAgitation />
+          </Suspense>
 
-          <Journey />
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <QuizBanner onStart={openQuiz} />
+          </Suspense>
 
-          <Philosophy />
+          <Suspense fallback={<div className="min-h-[200px]" />}>
+            <Journey />
+          </Suspense>
 
-          <WhatYouLearn />
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <Philosophy />
+          </Suspense>
+
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <WhatYouLearn />
+          </Suspense>
 
           <div id="webinar">
-            <Webinar />
+            <Suspense fallback={<div className="min-h-[200px]" />}>
+              <Webinar />
+            </Suspense>
           </div>
 
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <FAQ />
+          </Suspense>
 
-
-          <FAQ />
-
-          <FinalCTA
-            onQuiz={openQuiz}
-            onWebinar={() => {
-              const element = document.getElementById('webinar');
-              element?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            onForm={openForm}
-          />
+          <Suspense fallback={<div className="min-h-[100px]" />}>
+            <FinalCTA
+              onQuiz={openQuiz}
+              onWebinar={() => {
+                const element = document.getElementById('webinar');
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              onForm={openForm}
+            />
+          </Suspense>
         </main>
 
         <Footer />
 
         {/* Lead Gen Modals & Overlays */}
-        {showForm && <InstantLeadForm onClose={closeForm} />}
-        {showQuiz && <Quiz onClose={closeQuiz} />}
-        <ExitIntent />
-        <SocialProofToast />
-        <FloatingCTA onConnect={openForm} />
+        <Suspense fallback={null}>
+          {showForm && <InstantLeadForm onClose={closeForm} />}
+          {showQuiz && <Quiz onClose={closeQuiz} />}
+          <ExitIntent />
+          <SocialProofToast />
+          <FloatingCTA onConnect={openForm} />
+        </Suspense>
       </div>
     </Router>
   );
