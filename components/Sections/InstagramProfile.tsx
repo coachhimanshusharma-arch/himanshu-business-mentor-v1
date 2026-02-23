@@ -2,28 +2,40 @@
 import React, { useEffect } from 'react';
 
 const InstagramProfile: React.FC = () => {
-    // Force Vercel rebuild
+    const wistiaMediaIds = [
+        'gmxbuzzcxx',
+        'uv152hdopp',
+        '302ajnfoyi',
+        'aehq45hmo2',
+        '6gmc4uly6r',
+        'puv0o47l6s'
+    ];
+
     useEffect(() => {
-        // Load Instagram Embed Script
-        const script = document.createElement('script');
-        script.src = "//www.instagram.com/embed.js";
-        script.async = true;
-        document.body.appendChild(script);
+        // Load Wistia Player script
+        const playerScript = document.createElement('script');
+        playerScript.src = 'https://fast.wistia.com/player.js';
+        playerScript.async = true;
+        document.head.appendChild(playerScript);
+
+        // Load each video's embed script
+        const videoScripts: HTMLScriptElement[] = [];
+        wistiaMediaIds.forEach((id) => {
+            const script = document.createElement('script');
+            script.src = `https://fast.wistia.com/embed/${id}.js`;
+            script.async = true;
+            script.type = 'module';
+            document.head.appendChild(script);
+            videoScripts.push(script);
+        });
 
         return () => {
-            document.body.removeChild(script);
+            if (playerScript.parentNode) playerScript.parentNode.removeChild(playerScript);
+            videoScripts.forEach((s) => {
+                if (s.parentNode) s.parentNode.removeChild(s);
+            });
         };
     }, []);
-
-    const reels = [
-        "https://www.instagram.com/reel/DMaMc63zSXB/",
-        "https://www.instagram.com/reel/DKJ8hKRyI7o/",
-        "https://www.instagram.com/reel/DJjRMKeTXhu/",
-        "https://www.instagram.com/reel/DJofO7ATT3a/",
-        "https://www.instagram.com/reel/C35Obc3Nmb1/",
-        "https://www.instagram.com/reel/DO_O3myiVnD/",
-        "https://www.instagram.com/reel/DPOcC2VCay6/"
-    ];
 
     const highlights = [
         { title: 'SINGAPORE', img: 'https://flagcdn.com/w320/sg.png' },
@@ -100,46 +112,57 @@ const InstagramProfile: React.FC = () => {
                 </div>
             </div>
 
-            {/* Marquee Container */}
+            {/* Marquee Container - Wistia Videos */}
             <div className="w-full overflow-hidden py-4">
-                <div className="flex gap-4 animate-scroll hover:pause" style={{ width: 'max-content' }}>
-                    {/* Render multiple sets to ensure seamless scroll on wide screens */}
-                    {[...reels, ...reels].map((url, i) => (
-                        <div key={i} className="inline-block align-top rounded-xl overflow-hidden shadow-2xl border border-white/10 shrink-0 w-[326px]">
-                            <blockquote
-                                className="instagram-media"
-                                data-instgrm-permalink={url}
-                                data-instgrm-version="14"
-                                style={{
-                                    background: '#FFF',
-                                    border: '0',
-                                    borderRadius: '3px',
-                                    boxShadow: 'none',
-                                    margin: '1px',
-                                    maxWidth: '540px',
-                                    minWidth: '326px',
-                                    padding: '0',
-                                    width: 'calc(100% - 2px)'
+                <div className="reels-marquee-track flex gap-5" style={{ width: 'max-content' }}>
+                    {/* Double the videos for seamless infinite scroll */}
+                    {[...wistiaMediaIds, ...wistiaMediaIds].map((mediaId, i) => (
+                        <div
+                            key={i}
+                            className="inline-block shrink-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                            style={{ width: '260px', aspectRatio: '9/16' }}
+                        >
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: `
+                                        <style>
+                                            wistia-player[media-id='${mediaId}']:not(:defined) {
+                                                background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${mediaId}/swatch');
+                                                display: block;
+                                                filter: blur(5px);
+                                                padding-top: 177.78%;
+                                            }
+                                        </style>
+                                        <wistia-player
+                                            media-id="${mediaId}"
+                                            aspect="0.5625"
+                                            autoplay="true"
+                                            muted="true"
+                                            loop="true"
+                                            playsinline="true"
+                                            silentAutoplay="allow"
+                                            style="width:100%;height:100%;"
+                                        ></wistia-player>
+                                    `
                                 }}
-                            >
-                            </blockquote>
+                            />
                         </div>
                     ))}
                 </div>
             </div>
 
             <style>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          animation: scroll 60s linear infinite;
-        }
-        .hover\\:pause:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+                @keyframes reelsScroll {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                .reels-marquee-track {
+                    animation: reelsScroll 45s linear infinite;
+                }
+                .reels-marquee-track:hover {
+                    animation-play-state: paused;
+                }
+            `}</style>
         </section>
     );
 };
